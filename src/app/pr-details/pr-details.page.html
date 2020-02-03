@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="pr">{{ pr.nome }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="selected" class="selectedContainer">
+    <p style="font-size: 1.3rem; font-weight: bolder;">{{ selected.percentual }}</p>
+    <p style="text-decoration: underline;" (click)="changePesoBarra()">Peso da barra: {{ pesoBarra }}lb</p>
+    <p>Carga total: {{ selected.carga }}lb</p>
+    <p>Colocar de cada lado: {{ (selected.carga - pesoBarra) / 2 }}lb</p>
+  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4" *ngFor="let item of cargaList" (click)="select(item)">
+        <div [ngClass]="selected && selected.carga == item.carga ? 'cargaContainer cargaContainerSelected' : 'cargaContainer'">
+          <p class="percentual">{{item.percentual}}</p>
+          <p class="carga">{{item.carga.toFixed(2) + 'lb'}}</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="edit()">
+      <ion-icon name="create"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
